@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  ProductId Int @id @default(autoincrement())
+  ProductSKU String @unique
+  ProductName String
+  ProductPrice Float
+  ProductQuantity Int @default(1)
+  ProductCategoryId Int 
+  ProductDesc String
+  ProductImagePath String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Category Category @relation(fields: [ProductCategoryId], references: [CategoryId])
+  OrderDetail OrderDetail[]
+}
+
+model Category{
+  CategoryId Int @id @default(autoincrement())
+  CategoryName String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Products Product[]
+}
+
+model Order{
+  OrderId Int @id @default(autoincrement())
+  OrderAmount Float 
+  OrderPhone String
+  OrderEmail String 
+  OrderDate DateTime @default(now()) 
+  OrderWilaya String 
+  OrderCommune String
+  OrderAdress String
+  OrderStatus OrderStatus @default(PENDING)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt 
+
+  OrderDetail OrderDetail[]
+}
+
+model OrderDetail {
+  DetailId Int @id @default(autoincrement())
+  DetailOrderId Int
+  DetailProductId Int
+  DetailQuantity Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Order Order @relation(fields: [DetailOrderId], references: [OrderId])
+  Product Product @relation(fields: [DetailProductId], references: [ProductId])
+}
+
+model User{
+  UserId Int @id @default(autoincrement())
+  UserName String
+  UserEmail String @unique
+  UserPassword String
+  UserPhone String
+  UserRole Role @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+enum OrderStatus {
+  PENDING
+  SHIPPING
+  DELIVERED
+}
