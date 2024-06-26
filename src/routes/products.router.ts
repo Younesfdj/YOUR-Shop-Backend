@@ -3,12 +3,13 @@ import {
   getProduct,
   getProducts,
   addProduct,
+  addProductGallery,
   updateProduct,
   deleteProduct,
 } from "../controllers/product.controller";
 import { checkLogIn, isAdmin, isLoggedIn } from "../middlewares/auth";
 import { ProductValidator } from "../validators/ProductValidator";
-
+import { ProductGalleryValidator } from "../validators/ProductGalleryValidator";
 const productRouter = Router();
 
 productRouter.get("/products", getProducts);
@@ -20,6 +21,14 @@ productRouter.post(
   isAdmin,
   ProductValidator,
   addProduct
+);
+productRouter.post(
+  "/productGallery",
+  checkLogIn,
+  isLoggedIn,
+  isAdmin,
+  ProductGalleryValidator,
+  addProductGallery
 );
 productRouter.put(
   "/product/:id",

@@ -7,5 +7,5 @@ export const ProductSchema = z.object({
   ProductDesc: z.string().min(10),
   ProductQuantity: z.number().min(0).default(1),
   ProductCategoryId: z.number().min(1),
-  ProductImagePath: z.string().url(),
+  ProductSizes: z.string().default("s-m-l-xl-xxl"),
 });

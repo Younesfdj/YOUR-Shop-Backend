@@ -9,7 +9,7 @@ import {
 import { StatusCodes } from "http-status-codes";
 import { ProductSchema } from "../schema/ProductSchema";
 import { UnprocessedEntityError } from "../errors/unprocessed-entity";
-
+import { addProductImagesService } from "../services/inventory/productImages.service";
 export const getProduct = async (
   req: Request,
   res: Response,
@@ -42,6 +42,16 @@ export const addProduct = async (
 ) => {
   const newProduct = req.body;
   const result = await addProductService(newProduct);
+  if (result instanceof Error) return next(result);
+  res.status(StatusCodes.CREATED).json(result);
+};
+export const addProductGallery = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const newProductGallery = req.body;
+  const result = await addProductImagesService(newProductGallery);
   if (result instanceof Error) return next(result);
   res.status(StatusCodes.CREATED).json(result);
 };

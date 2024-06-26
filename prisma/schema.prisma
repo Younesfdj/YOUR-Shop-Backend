@@ -13,6 +13,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// TODO: modify the product scheme to include the array of image paths and array of sizes
+
+
+model ProductImage {
+  ProductImageId Int @id @default(autoincrement())
+  ProductImagePath String
+  ProductId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Product Product @relation(fields: [ProductImageId], references: [ProductId])
+}
+
 model Product {
   ProductId Int @id @default(autoincrement())
   ProductSKU String @unique
@@ -21,12 +34,14 @@ model Product {
   ProductQuantity Int @default(1)
   ProductCategoryId Int 
   ProductDesc String
-  ProductImagePath String
+  ProductSizes String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   Category Category @relation(fields: [ProductCategoryId], references: [CategoryId])
   OrderDetail OrderDetail[]
+  ProductImages ProductImage[]
+
 }
 
 model Category{

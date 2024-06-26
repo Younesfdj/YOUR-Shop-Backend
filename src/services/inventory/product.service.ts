@@ -30,7 +30,7 @@ export const getProductService = async (ProductId: number) => {
       ProductSKU: product.ProductSKU,
       ProductQuantity: product.ProductQuantity,
       ProductCategoryId: product.ProductCategoryId,
-      ProductImagePath: product.ProductImagePath,
+      ProductSizes: product.ProductSizes,
     };
   } catch (error: any) {
     return new InternalError("Something went wrong", 1007, error);
@@ -72,9 +72,9 @@ export const addProductService = async (newProduct: Product) => {
         ProductDesc: newProduct.ProductDesc,
         ProductPrice: newProduct.ProductPrice,
         ProductQuantity: newProduct.ProductQuantity,
+        ProductSizes: newProduct.ProductSizes,
         ProductSKU: newProduct.ProductSKU,
         ProductCategoryId: newProduct.ProductCategoryId,
-        ProductImagePath: newProduct.ProductImagePath,
       },
     });
 
@@ -86,7 +86,7 @@ export const addProductService = async (newProduct: Product) => {
       ProductPrice: product.ProductPrice,
       ProductSKU: product.ProductSKU,
       ProductCategoryId: product.ProductCategoryId,
-      ProductImagePath: product.ProductImagePath,
+      ProductSizes: product.ProductSizes,
     };
   } catch (error) {
     return new InternalError("Something went wrong", 1007, error);
@@ -125,7 +125,7 @@ export const updateProductService = async (
         ProductQuantity: newProduct.ProductQuantity,
         ProductSKU: newProduct.ProductSKU,
         ProductCategoryId: newProduct.ProductCategoryId,
-        ProductImagePath: newProduct.ProductImagePath,
+        ProductSizes: newProduct.ProductSizes,
       },
     });
 
@@ -137,7 +137,7 @@ export const updateProductService = async (
       ProductQuantity: product.ProductQuantity,
       ProductSKU: product.ProductSKU,
       ProductCategoryId: product.ProductCategoryId,
-      ProductImagePath: product.ProductImagePath,
+      ProductSizes: product.ProductSizes,
     };
   } catch (error: any) {
     return new InternalError("Something went wrong", 1007, error);
@@ -175,7 +175,7 @@ export const deleteProductService = async (ProductId: number) => {
       ProductQuantity: product.ProductQuantity,
       ProductSKU: product.ProductSKU,
       ProductCategoryId: product.ProductCategoryId,
-      ProductImagePath: product.ProductImagePath,
+      ProductSizes: product.ProductSizes,
     };
   } catch (error: any) {
     return new InternalError("Something went wrong", 1007, error);
