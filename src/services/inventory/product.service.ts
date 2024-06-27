@@ -31,6 +31,7 @@ export const getProductService = async (ProductId: number) => {
       ProductQuantity: product.ProductQuantity,
       ProductCategoryId: product.ProductCategoryId,
       ProductSizes: product.ProductSizes,
+      ProductGallery: await getProductGalleryService(ProductId),
     };
   } catch (error: any) {
     return new InternalError("Something went wrong", 1007, error);
@@ -45,7 +46,22 @@ export const getProductService = async (ProductId: number) => {
 export const getProductsService = async () => {
   try {
     const products = await prismaClient.product.findMany();
-    return products;
+    const productsWithGallery = await Promise.all(
+      products.map(async (product) => {
+        return {
+          ProductId: product.ProductId,
+          ProductName: product.ProductName,
+          ProductDesc: product.ProductDesc,
+          ProductPrice: product.ProductPrice,
+          ProductQuantity: product.ProductQuantity,
+          ProductSKU: product.ProductSKU,
+          ProductCategoryId: product.ProductCategoryId,
+          ProductSizes: product.ProductSizes,
+          ProductGallery: await getProductGalleryService(product.ProductId),
+        };
+      })
+    );
+    return productsWithGallery;
   } catch (error: any) {
     return new InternalError("Something went wrong", 1007, error);
   }
@@ -138,6 +154,7 @@ export const updateProductService = async (
       ProductSKU: product.ProductSKU,
       ProductCategoryId: product.ProductCategoryId,
       ProductSizes: product.ProductSizes,
+      ProductGallery: product.ProductGallery,
     };
   } catch (error: any) {
     return new InternalError("Something went wrong", 1007, error);
@@ -176,7 +193,21 @@ export const deleteProductService = async (ProductId: number) => {
       ProductSKU: product.ProductSKU,
       ProductCategoryId: product.ProductCategoryId,
       ProductSizes: product.ProductSizes,
+      ProductGallery: product.ProductGallery,
     };
+  } catch (error: any) {
+    return new InternalError("Something went wrong", 1007, error);
+  }
+};
+
+const getProductGalleryService = async (ProductId: number) => {
+  try {
+    const productGallery = await prismaClient.productImage.findMany({
+      where: {
+        ProductId,
+      },
+    });
+    return productGallery;
   } catch (error: any) {
     return new InternalError("Something went wrong", 1007, error);
   }
