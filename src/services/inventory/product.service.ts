@@ -206,6 +206,11 @@ const getProductGalleryService = async (ProductId: number) => {
       where: {
         ProductId,
       },
+      select: {
+        ProductImageId: true,
+        ProductImagePath: true,
+        ProductId: true,
+      },
     });
     return productGallery;
   } catch (error: any) {
