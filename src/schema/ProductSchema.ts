@@ -8,5 +8,4 @@ export const ProductSchema = z.object({
   ProductQuantity: z.number().min(0).default(1),
   ProductCategoryId: z.number().min(1),
   ProductSizes: z.string().default("s-m-l-xl-xxl"),
-  ProductGallery: z.array(z.string()).default([]).optional(),
 });

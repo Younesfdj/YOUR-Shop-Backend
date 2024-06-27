@@ -154,7 +154,6 @@ export const updateProductService = async (
       ProductSKU: product.ProductSKU,
       ProductCategoryId: product.ProductCategoryId,
       ProductSizes: product.ProductSizes,
-      ProductGallery: product.ProductGallery,
     };
   } catch (error: any) {
     return new InternalError("Something went wrong", 1007, error);
@@ -193,7 +192,6 @@ export const deleteProductService = async (ProductId: number) => {
       ProductSKU: product.ProductSKU,
       ProductCategoryId: product.ProductCategoryId,
       ProductSizes: product.ProductSizes,
-      ProductGallery: product.ProductGallery,
     };
   } catch (error: any) {
     return new InternalError("Something went wrong", 1007, error);
