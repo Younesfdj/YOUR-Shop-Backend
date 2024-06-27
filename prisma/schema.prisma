@@ -23,7 +23,7 @@ model ProductImage {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Product Product @relation(fields: [ProductImageId], references: [ProductId])
+  Product Product @relation(fields: [ProductId], references: [ProductId])
 }
 
 model Product {

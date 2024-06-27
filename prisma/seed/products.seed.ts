@@ -8,9 +8,9 @@ async function main(prisma: PrismaClient) {
         ProductName: product.ProductName,
         ProductDesc: product.ProductDesc,
         ProductPrice: product.ProductPrice,
-        ProductImagePath: product.ProductImagePath,
         ProductQuantity: product.ProductQuantity,
         ProductSKU: product.ProductSKU,
+        ProductSizes: product.ProductSizes,
         Category: {
           connect: {
             CategoryId: product.ProductCategoryId,

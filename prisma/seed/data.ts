@@ -1,5 +1,38 @@
 import { OrderStatus, Role } from "@prisma/client";
 
+export const productGallery = [
+  {
+    ProductImagePath:
+      "https://res.cloudinary.com/duypc2nna/image/upload/v1718406503/samsung-s21_w7is4c.webp",
+    ProductId: 5,
+  },
+  {
+    ProductImagePath:
+      "https://res.cloudinary.com/duypc2nna/image/upload/v1718406503/samsung-s21_w7is4c.webp",
+    ProductId: 5,
+  },
+  {
+    ProductImagePath:
+      "https://res.cloudinary.com/duypc2nna/image/upload/v1718406691/jacket_fnngia.jpg",
+    ProductId: 6,
+  },
+  {
+    ProductImagePath:
+      "https://res.cloudinary.com/duypc2nna/image/upload/v1718406691/jacket_fnngia.jpg",
+    ProductId: 6,
+  },
+  {
+    ProductImagePath:
+      "https://res.cloudinary.com/duypc2nna/image/upload/v1718406772/friteuse_y8ea1s.jpg",
+    ProductId: 7,
+  },
+  {
+    ProductImagePath:
+      "https://res.cloudinary.com/duypc2nna/image/upload/v1718406772/friteuse_y8ea1s.jpg",
+    ProductId: 7,
+  },
+];
+
 export const productCategories = [
   { CategoryName: "Electronics" },
   { CategoryName: "Clothing" },
@@ -27,9 +60,8 @@ export const products = [
     ProductPrice: 999,
     ProductSKU: "SAMSUNGGS21",
     ProductCategoryId: 1,
-    ProductImagePath:
-      "https://res.cloudinary.com/duypc2nna/image/upload/v1718406503/samsung-s21_w7is4c.webp",
     ProductQuantity: 5,
+    ProductSizes: "s-m",
   },
   {
     ProductName: "Men's Leather Jacket",
@@ -38,9 +70,8 @@ export const products = [
     ProductPrice: 199,
     ProductSKU: "MENLEATHERJKT",
     ProductCategoryId: 2,
-    ProductImagePath:
-      "https://res.cloudinary.com/duypc2nna/image/upload/v1718406691/jacket_fnngia.jpg",
     ProductQuantity: 5,
+    ProductSizes: "s-m",
   },
   {
     ProductName: "Instant Pot Pressure Cooker",
@@ -49,9 +80,8 @@ export const products = [
     ProductPrice: 79.99,
     ProductSKU: "INSTANTPOTPC",
     ProductCategoryId: 3,
-    ProductImagePath:
-      "https://res.cloudinary.com/duypc2nna/image/upload/v1718406772/friteuse_y8ea1s.jpg",
     ProductQuantity: 5,
+    ProductSizes: "s-m",
   },
 ];
 export const orders = [];
