@@ -2,7 +2,11 @@ import { InternalError } from "../../errors/internal-error";
 import { prismaClient } from "../../config/prisma";
 import { BadRequestError } from "../../errors/bad-request";
 import { Order, OrderI } from "../../types/Order";
-import { addOrderDetailService } from "./orderDetail.service";
+import {
+  addOrderDetailService,
+  deleteOrderDetailService,
+  checkProductQuantity,
+} from "./orderDetail.service";
 import { log } from "../../utils/logger";
 
 /**
@@ -51,25 +55,27 @@ export const addOrderService = async (newOrder: Order) => {
   try {
     const order = await prismaClient.order.create({
       data: {
-        OrderAdress: newOrder.OrderAdress,
         OrderAmount: newOrder.OrderAmount,
         OrderCommune: newOrder.OrderCommune,
         OrderWilaya: newOrder.OrderWilaya,
-        OrderEmail: newOrder.OrderEmail,
         OrderPhone: newOrder.OrderPhone,
         OrderStatus: newOrder.OrderStatus,
+        OrderFName: newOrder.OrderFName,
+        OrderLName: newOrder.OrderLName,
+        OrderShippingMode: newOrder.OrderShippingMode,
       },
     });
     return {
       OrderId: order.OrderId,
       OrderAmount: order.OrderAmount,
       OrderPhone: order.OrderPhone,
-      OrderEmail: order.OrderEmail,
       OrderDate: order.OrderDate,
       OrderCommune: newOrder.OrderCommune,
       OrderWilaya: newOrder.OrderWilaya,
-      OrderAdress: order.OrderAdress,
       OrderStatus: order.OrderStatus,
+      OrderFName: newOrder.OrderFName,
+      OrderLName: newOrder.OrderLName,
+      OrderShippingMode: newOrder.OrderShippingMode,
     };
   } catch (error) {
     return new InternalError("Something went wrong", 1007, error);
@@ -106,21 +112,30 @@ export const deleteOrderService = async (OrderId: number) => {
     if (!orderExists) {
       return new BadRequestError("Order not found", 4001);
     }
+    const orderDetails = await prismaClient.orderDetail.deleteMany({
+      where: {
+        DetailOrderId: OrderId,
+      },
+    });
     const order = await prismaClient.order.delete({
       where: {
         OrderId,
       },
     });
     return {
-      OrderId: order.OrderId,
-      OrderAmount: order.OrderAmount,
-      OrderPhone: order.OrderPhone,
-      OrderEmail: order.OrderEmail,
-      OrderDate: order.OrderDate,
-      OrderCommune: order.OrderCommune,
-      OrderWilaya: order.OrderWilaya,
-      OrderAdress: order.OrderAdress,
-      OrderStatus: order.OrderStatus,
+      orderInfo: {
+        OrderId: order.OrderId,
+        OrderAmount: order.OrderAmount,
+        OrderPhone: order.OrderPhone,
+        OrderDate: order.OrderDate,
+        OrderCommune: order.OrderCommune,
+        OrderWilaya: order.OrderWilaya,
+        OrderStatus: order.OrderStatus,
+        OrderFName: order.OrderFName,
+        OrderLName: order.OrderLName,
+        OrderShippingMode: order.OrderShippingMode,
+      },
+      orderProducts: orderDetails,
     };
   } catch (error: any) {
     return new InternalError("Something went wrong", 1007, error);
@@ -133,11 +148,21 @@ export const deleteOrderService = async (OrderId: number) => {
  */
 export const makeOrderService = async (order: OrderI) => {
   try {
+    // check first if the quantity is available for each product
+    for (let index = 0; index < order.orderProducts.length; index++) {
+      const element = order.orderProducts[index];
+      const productQuantity = await checkProductQuantity(
+        element.DetailProductId,
+        element.DetailQuantity
+      );
+      if (productQuantity instanceof Error) {
+        return productQuantity;
+      }
+    }
     const orderResult = await addOrderService(order.orderInfo);
     if (orderResult instanceof Error) {
       return orderResult;
     }
-
     for (let index = 0; index < order.orderProducts.length; index++) {
       const element = order.orderProducts[index];
       const orderDetailResult = await addOrderDetailService({

@@ -77,7 +77,9 @@ export const deleteOrder = async (
   }
   const result = await deleteOrderService(parseInt(id));
   if (result instanceof Error) return next(result);
-  res.status(StatusCodes.OK).json({ message: "Order deleted successfully" });
+  res
+    .status(StatusCodes.OK)
+    .json({ message: "Order deleted successfully", data: result });
 };
 
 export const makeCompleteOrder = async (

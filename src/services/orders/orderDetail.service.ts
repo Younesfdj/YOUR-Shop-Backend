@@ -45,6 +45,27 @@ export const getOrdersDetailService = async () => {
   }
 };
 
+export const checkProductQuantity = async (
+  productId: number,
+  quantity: number
+) => {
+  try {
+    const product = await getProductService(productId);
+    if (product instanceof Error) {
+      return product;
+    }
+    if (product.ProductQuantity < quantity) {
+      return new BadRequestError(
+        `Product with id=${product.ProductId} out of stock`,
+        2003
+      );
+    }
+    return product;
+  } catch (error: any) {
+    return new InternalError("Something went wrong", 1007, error);
+  }
+};
+
 /**
  * @description  Add an Order Detail
  * @param newOrderDetail  - OrderDetail

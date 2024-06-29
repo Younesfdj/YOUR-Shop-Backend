@@ -13,8 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// TODO: modify the product scheme to include the array of image paths and array of sizes
-
 
 model ProductImage {
   ProductImageId Int @id @default(autoincrement())
@@ -55,13 +53,14 @@ model Category{
 
 model Order{
   OrderId Int @id @default(autoincrement())
+  OrderFName String 
+  OrderLName String 
   OrderAmount Float 
   OrderPhone String
-  OrderEmail String 
-  OrderDate DateTime @default(now()) 
   OrderWilaya String 
   OrderCommune String
-  OrderAdress String
+  OrderShippingMode OrderShippingMode 
+  OrderDate DateTime @default(now()) 
   OrderStatus OrderStatus @default(PENDING)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt 
@@ -100,4 +99,8 @@ enum OrderStatus {
   PENDING
   SHIPPING
   DELIVERED
+}
+enum OrderShippingMode {
+  AGENCY
+  HAND
 }
