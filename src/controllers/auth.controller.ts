@@ -5,6 +5,8 @@ import {
   loginUserService,
 } from "../services/user/auth.service";
 import { StatusCodes } from "http-status-codes";
+import { MyRequest } from "../types/Express";
+import { User } from "@prisma/client";
 
 const registerUser = async (
   req: Request,
@@ -47,4 +49,13 @@ const registerAdmin = async (
   res.status(StatusCodes.ACCEPTED).json(result);
 };
 
-export { registerUser, loginUser, registerAdmin };
+const authUser = async (
+  req: MyRequest<null | User>,
+  res: Response,
+  next: NextFunction
+) => {
+  const user = req.user;
+  res.status(StatusCodes.OK).json(user);
+};
+
+export { registerUser, loginUser, registerAdmin, authUser };

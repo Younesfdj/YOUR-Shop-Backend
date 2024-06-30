@@ -3,7 +3,6 @@ import { BadRequestError } from "../errors/bad-request";
 import { prismaClient } from "../config/prisma";
 import { verifyToken } from "../utils/jwt";
 import { MyRequest } from "../types/Express";
-import { User } from "@prisma/client";
 import { InternalError } from "../errors/internal-error";
 /**
  * @description  Extract the token from the request
@@ -34,7 +33,7 @@ function extractToken(req: Request): string | null {
  */
 
 export const checkLogIn = async (
-  req: MyRequest<null | User>,
+  req: MyRequest<null | UserI>,
   res: Response,
   next: NextFunction
 ) => {
@@ -50,6 +49,11 @@ export const checkLogIn = async (
       const user = await prismaClient.user.findUnique({
         where: {
           UserId,
+        },
+        select: {
+          UserId: true,
+          UserEmail: true,
+          UserName: true,
         },
       });
       if (!user) {
@@ -74,7 +78,7 @@ export const checkLogIn = async (
  *
  */
 export const isLoggedIn = (
-  req: MyRequest<null | User>,
+  req: MyRequest<null | UserI>,
   res: Response,
   next: NextFunction
 ) => {
@@ -85,7 +89,7 @@ export const isLoggedIn = (
 };
 
 export const isAdmin = (
-  req: MyRequest<null | User>,
+  req: MyRequest<null | UserI>,
   res: Response,
   next: NextFunction
 ) => {
