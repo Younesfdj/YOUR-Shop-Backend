@@ -55,7 +55,11 @@ const authUser = async (
   next: NextFunction
 ) => {
   const user = req.user;
-  res.status(StatusCodes.OK).json(user);
+  res.status(StatusCodes.OK).json({
+    UserId: user?.UserId,
+    UserName: user?.UserName,
+    UserEmail: user?.UserEmail,
+  });
 };
 
 export { registerUser, loginUser, registerAdmin, authUser };

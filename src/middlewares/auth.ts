@@ -4,6 +4,7 @@ import { prismaClient } from "../config/prisma";
 import { verifyToken } from "../utils/jwt";
 import { MyRequest } from "../types/Express";
 import { InternalError } from "../errors/internal-error";
+import { log } from "../utils/logger";
 /**
  * @description  Extract the token from the request
  * @param {Request} req - The request object
@@ -50,11 +51,6 @@ export const checkLogIn = async (
         where: {
           UserId,
         },
-        select: {
-          UserId: true,
-          UserEmail: true,
-          UserName: true,
-        },
       });
       if (!user) {
         return next(new BadRequestError("User not found", 1001));
@@ -93,6 +89,7 @@ export const isAdmin = (
   res: Response,
   next: NextFunction
 ) => {
+  log.debug(req.user);
   if (req.user?.UserRole === "ADMIN") {
     return next();
   }
