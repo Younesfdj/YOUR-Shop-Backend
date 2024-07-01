@@ -4,32 +4,32 @@ export const productGallery = [
   {
     ProductImagePath:
       "https://res.cloudinary.com/duypc2nna/image/upload/v1718406503/samsung-s21_w7is4c.webp",
-    ProductId: 5,
+    ProductId: 1,
   },
   {
     ProductImagePath:
-      "https://res.cloudinary.com/duypc2nna/image/upload/v1718406503/samsung-s21_w7is4c.webp",
-    ProductId: 5,
-  },
-  {
-    ProductImagePath:
-      "https://res.cloudinary.com/duypc2nna/image/upload/v1718406691/jacket_fnngia.jpg",
-    ProductId: 6,
+      "https://res.cloudinary.com/duypc2nna/image/upload/v1718406103/samsung-s21_w7is4c.webp",
+    ProductId: 1,
   },
   {
     ProductImagePath:
       "https://res.cloudinary.com/duypc2nna/image/upload/v1718406691/jacket_fnngia.jpg",
-    ProductId: 6,
+    ProductId: 2,
+  },
+  {
+    ProductImagePath:
+      "https://res.cloudinary.com/duypc2nna/image/upload/v1718406691/jacket_fnngia.jpg",
+    ProductId: 2,
   },
   {
     ProductImagePath:
       "https://res.cloudinary.com/duypc2nna/image/upload/v1718406772/friteuse_y8ea1s.jpg",
-    ProductId: 7,
+    ProductId: 3,
   },
   {
     ProductImagePath:
       "https://res.cloudinary.com/duypc2nna/image/upload/v1718406772/friteuse_y8ea1s.jpg",
-    ProductId: 7,
+    ProductId: 3,
   },
 ];
 

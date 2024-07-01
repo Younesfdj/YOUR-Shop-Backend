@@ -102,6 +102,9 @@ export const addOrderDetailService = async (newOrderDetail: OrderDetail) => {
         DetailOrderId: newOrderDetail.DetailOrderId,
         DetailProductId: newOrderDetail.DetailProductId,
         DetailQuantity: newOrderDetail.DetailQuantity,
+        DetailProductName: newOrderDetail.DetailProductName,
+        DetailProductPrice: newOrderDetail.DetailProductPrice,
+        OrderSize: newOrderDetail.OrderSize,
       },
     });
     return {

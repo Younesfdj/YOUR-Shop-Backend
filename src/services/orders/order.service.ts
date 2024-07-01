@@ -9,6 +9,8 @@ import {
 } from "./orderDetail.service";
 import { log } from "../../utils/logger";
 
+// TODO: implement update order status
+
 /**
  * @description  Get Order by Id
  * @param OrderId  - number
@@ -22,10 +24,18 @@ export const getOrderService = async (OrderId: number) => {
         OrderId: OrderId,
       },
     });
+    const orderDetails = await prismaClient.orderDetail.findMany({
+      where: {
+        DetailOrderId: OrderId,
+      },
+    });
     if (!order) {
       return new BadRequestError("Order not found", 4001);
     }
-    return order;
+    return {
+      ...order,
+      OrderDetails: orderDetails,
+    };
   } catch (error: any) {
     return new InternalError("Something went wrong", 1007, error);
   }
@@ -169,6 +179,9 @@ export const makeOrderService = async (order: OrderI) => {
         DetailOrderId: orderResult.OrderId,
         DetailProductId: element.DetailProductId,
         DetailQuantity: element.DetailQuantity,
+        DetailProductName: element.DetailProductName,
+        DetailProductPrice: element.DetailProductPrice,
+        OrderSize: element.OrderSize,
       });
       if (orderDetailResult instanceof Error) {
         return orderDetailResult;

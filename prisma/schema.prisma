@@ -73,6 +73,9 @@ model OrderDetail {
   DetailOrderId Int
   DetailProductId Int
   DetailQuantity Int
+  DetailProductName String
+  DetailProductPrice Float
+  OrderSize String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

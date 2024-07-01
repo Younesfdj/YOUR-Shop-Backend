@@ -7,6 +7,9 @@ declare interface OrderI {
   orderProducts: {
     DetailProductId: number;
     DetailQuantity: number;
+    DetailProductName: string;
+    DetailProductPrice: number;
+    OrderSize: string;
   }[];
 }
 export { OrderI, Order };
