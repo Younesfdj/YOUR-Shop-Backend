@@ -12,5 +12,5 @@ export default function setRouters(app: Application) {
   app.use("/", categoryRouter);
   app.use("/", orderRouter);
   app.use("/", orderDetailRouter);
-  app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+  // app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 }
