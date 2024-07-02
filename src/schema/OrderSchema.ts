@@ -9,5 +9,7 @@ export const OrderSchema = z.object({
   OrderCommune: z.string().min(1),
   OrderShippingMode: z.enum(["AGENCY", "HAND"]),
   OrderDate: z.date().optional(),
-  OrderStatus: z.enum(["PENDING", "SHIPPING", "DELIVERED"]).default("PENDING"),
+  OrderStatus: z
+    .enum(["PENDING", "SHIPPING", "DELIVERED", "CANCELLED"])
+    .default("PENDING"),
 });

@@ -102,7 +102,7 @@ enum OrderStatus {
   PENDING
   SHIPPING
   DELIVERED
-  CANCELED
+  CANCELLED
 }
 enum OrderShippingMode {
   AGENCY

@@ -9,8 +9,6 @@ import {
 } from "./orderDetail.service";
 import { log } from "../../utils/logger";
 
-// TODO: implement update order status
-
 /**
  * @description  Get Order by Id
  * @param OrderId  - number
@@ -101,6 +99,33 @@ export const addOrderService = async (newOrder: Order) => {
 
 export const updateOrderService = async (OrderId: number, newOrder: Order) => {
   try {
+    const order = await prismaClient.order.update({
+      where: {
+        OrderId,
+      },
+      data: {
+        OrderAmount: newOrder.OrderAmount,
+        OrderCommune: newOrder.OrderCommune,
+        OrderWilaya: newOrder.OrderWilaya,
+        OrderPhone: newOrder.OrderPhone,
+        OrderStatus: newOrder.OrderStatus,
+        OrderFName: newOrder.OrderFName,
+        OrderLName: newOrder.OrderLName,
+        OrderShippingMode: newOrder.OrderShippingMode,
+      },
+    });
+    return {
+      OrderId: order.OrderId,
+      OrderAmount: order.OrderAmount,
+      OrderPhone: order.OrderPhone,
+      OrderDate: order.OrderDate,
+      OrderCommune: order.OrderCommune,
+      OrderWilaya: order.OrderWilaya,
+      OrderStatus: order.OrderStatus,
+      OrderFName: order.OrderFName,
+      OrderLName: order.OrderLName,
+      OrderShippingMode: order.OrderShippingMode,
+    };
   } catch (error: any) {
     return new InternalError("Something went wrong", 1007, error);
   }
